@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/bhirmbani/JadwalBola#readme",
   "dependencies": {
+    "axios": "^0.16.1",
     "body-parser": "^1.17.1",
+    "circular-json": "^0.3.1",
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",

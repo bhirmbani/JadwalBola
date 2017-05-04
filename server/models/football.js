@@ -1,4 +1,14 @@
-var client= require('football-api-nodejs-client')('d50e127ef1404fd9a4a51c807899d109');
+const axios = require('axios');
+const circularJSON = require('circular-json')
+const methods = {};
 
-client.getCompetitions()
+methods.gets = (req, res) => {
+  axios.get('http://api.football-data.org/v1/competitions/426/teams')
+  .then((data) => {
+    res.send(circularJSON.stringify(data.data));
+  })
+}
+
+
+module.exports = methods;
 

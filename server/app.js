@@ -15,7 +15,7 @@ passport.use(new Strategy(authController.signin));
 
 var users = require('./routes/users')
 var auths = require('./routes/auths')
-// var footballs = require('./routes/footballs')
+var footballs = require('./routes/footballs')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
@@ -30,6 +30,6 @@ app.use(function(req, res, next) {
 
 app.use('/users', users)
 app.use('/', auths)
-// app.use('footballs', footballs)
+app.use('/footballs', footballs)
 
 app.listen(3000)
