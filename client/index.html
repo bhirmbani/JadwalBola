@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.js"></script>
+</head>
+<body>
+    <div id="app">
+        <form>
+            <label>Username</label>
+            <input type="text" v-model="username">
+            <br>
+            <label>Password</label>
+            <input type="password" v-model="password">
+            <br>
+            <button type="button" v-on:click="onLogin">Login</button>
+        </form>
+    </div>
+
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                username: '',
+                password: ''
+            },
+            methods: {
+                onLogin() {
+                    let self = this;
+                    
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>
