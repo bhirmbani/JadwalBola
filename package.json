@@ -21,6 +21,7 @@
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
+    "football-api-client": "^1.0.8",
     "jsonwebtoken": "^7.4.0",
     "mongoose": "^4.9.7",
     "passport": "^0.3.2",
