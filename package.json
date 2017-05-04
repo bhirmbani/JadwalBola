@@ -1,0 +1,30 @@
+{
+  "name": "jadwal-bola",
+  "version": "1.0.0",
+  "description": "pair-project-minggu2-phase2",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhirmbani/JadwalBola.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bhirmbani/JadwalBola/issues"
+  },
+  "homepage": "https://github.com/bhirmbani/JadwalBola#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "jsonwebtoken": "^7.4.0",
+    "mongoose": "^4.9.7",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "password-hash": "^1.2.2"
+  }
+}
