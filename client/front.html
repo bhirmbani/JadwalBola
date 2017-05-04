@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>data</p>
+
+        <a href="signin.html" v-if="success == false"><h1>Login</h1></a>
+        <div v-else>
+            <a href="home1.html" v-on:click="onLogout"><h1>Logout</h1></a>
+        </div>
+
+    </div>
+</body>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            // products : [],
+            // carts: [],
+            // cartCounter: 0,
+            // counter: 0
+            success : ''
+        },
+        methods: {
+            loadData:function(){
+                axios.get('http://localhost:3000/footballs',
+                {
+                    headers:{
+                        token: localStorage.getItem('token')
+                    }
+                })
+                .then(function(response) {
+                    if(response.data.success){
+                        // app.products = response.data.records
+                        app.success = response.data.sucess
+                    } else {
+                        alert(response.data.msg);
+                        window.location.href = 'signin.html';
+                    }
+                })
+                .catch(function(error) {
+                    console.log(error)
+                })
+            },
+            onLogout:function(){
+                localStorage.clear()
+                window.location.href = 'signin.html'
+            }
+        },
+        created:function() {
+            this.loadData()
+        }
+    })
+
+    </script>
+
+</html>
