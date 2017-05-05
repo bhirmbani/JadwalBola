@@ -66,8 +66,8 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <h3>Jadwal Pertandingan</h3>
-                        <ul class="list-group" v-for="product in products">
-                            <li class="list-group-item">{{product.name}}-{{product.role}}</li>
+                        <ul class="list-group" v-for="pertandingan in pertandingans">
+                            <li class="list-group-item">{{pertandingan.status}}-{{product.role}}</li>
                         </ul>
                     </div>
                     <div class="col-lg-6">
@@ -83,8 +83,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(product, firstIndex) in products">
-                                        <th>{{counter++}}</th>
+                                   <!--  <tr v-for="(pertandingasssn, firstIndex) in pertandssingans">
+                                        <th>{{pertandingan.}}</th>
                                         <td>{{product.role}}</td>
                                         <td>{{product.username}}</td>
                                         <td>
@@ -96,9 +96,9 @@
                                               </button>
                                             </a>
 
-                                            <!-- <a class="nav-link" class="btn btn-warning" href="#" v-on="click: deleteEvent(firstIndex)">Log In</a> -->
+                                            <a class="nav-link" class="btn btn-warning" href="#" v-on="click: deleteEvent(firstIndex)">Log In</a>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                 </tbody>
                             </table>
                         </table>
@@ -128,21 +128,22 @@
         var app = new Vue({
             el: '#app',
             data: {
-                products: [],
+                pertandingans: [],
                 counter: -199
             },
             methods: {
                 loadData: function() {
                     axios.get('http://localhost:3000/footballs', {})
                         .then(function(response) {
-                            if (response.data.success) {
-                                app.products = response.data.records
-                                // console.log('a')
-                            } else {
-                                // app.products = response.data.records
-                                alert(response.data.msg);
-                                // window.location.href = 'index.html';
-                            }
+                            console.log(response)
+                            // if (response.data.success) {
+                            //     app.pertandingan = response.data.records
+                            //     // console.log('a')
+                            // } else {
+                            //     // app.products = response.data.records
+                            //     alert(response.data.msg);
+                            //     // window.location.href = 'index.html';
+                            // }
                         })
                         .catch(function(error) {
                             console.log(error)
