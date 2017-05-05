@@ -31,11 +31,21 @@
                 </a>
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <i class="fa fa-sign-out logo-out" aria-hidden="true"></i>
+                        <i class="fa fa-sign-in logo-in" aria-hidden="true"></i>
+                        <!-- <button type="button" class="btn btn-warning" v-on:click="onLogout">Log Out</button> -->
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" class="btn btn-warning" href="signin.html">Log In</a>
+                        <!-- <button type="button" class="btn btn-warning" v-on:click="onLogout">Log Out</button> -->
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html" v-on:click="onLogout">Log Out</a>
-                        <!-- <button type="button" class="btn btn-danger mt-1" v-on:click="onLogout"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</button> -->
+                        <i class="fa fa-user logo-in" aria-hidden="true"></i>
+                        <!-- <button type="button" class="btn btn-warning" v-on:click="onLogout">Log Out</button> -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" class="btn btn-success" href="register.html">Register</a>
+                        <!-- <button type="button" class="btn btn-warning" v-on:click="onLogout">Log Out</button> -->
                     </li>
                 </ul>
             </div>
@@ -69,80 +79,82 @@
                                         <th>No</th>
                                         <th>Tim</th>
                                         <th>Poin</th>
+                                        <th>operasi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(product, firstIndex) in products">
-                                        <th>{{firstIndex+=1}}</th>
+                                        <th>{{counter++}}</th>
                                         <td>{{product.role}}</td>
                                         <td>{{product.username}}</td>
+                                        <td>
+                                            <a href="#" class="list-group-item">
+
+                                              <button class="btn btn-xs btn-danger" v-on:click="deleteEvent(product._id)">
+
+                                                Delete Event
+                                              </button>
+                                            </a>
+
+                                            <!-- <a class="nav-link" class="btn btn-warning" href="#" v-on="click: deleteEvent(firstIndex)">Log In</a> -->
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6 offset-lg-3">
-                        <form>
-                            <div class="form-group">
-                                <label for="detail_team">Cari Detail Team Premier League</label>
-                                <select class="form-control" id="team" name="team">
-                                  <option>1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
-                                </select>
-                                <!-- <input type="text" class="form-control" placeholder="Enter Username" v-model="username"> -->
-                            </div>
-                            <button type="button" class="btn btn-primary" v-on:click="onFavourite">Cari</button>
-                            <!-- <a href="" class="btn btn-primary" v-on:click="onFavourite">Cari</a> -->
-                        </form>
-                    </div>
-                </div>
             </div>
-
-
-
         </div>
 
-        <footer class="footer-front">
-            <div class="container">
-                <h6 class="text-center pt-3">Copyright by Awesome Key 2017</h6>
-            </div>
-        </footer>
+
     </div>
+
+    <footer class="footer-front">
+        <div class="container">
+            <h6 class="text-center pt-3">Copyright by Jadwal Bola 2017</h6>
+        </div>
+    </footer>
+    </div>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        });
+    </script>
 
     <script>
         var app = new Vue({
             el: '#app',
             data: {
-                products: []
+                products: [],
+                counter: -199
             },
             methods: {
                 loadData: function() {
-                    axios.get('http://localhost:3000/footballs', {
-                            headers: {
-                                token: localStorage.getItem('token')
-                            }
-                        })
+                    axios.get('http://localhost:3000/footballs', {})
                         .then(function(response) {
                             if (response.data.success) {
                                 app.products = response.data.records
-                                app.success = response.data.success
+                                // console.log('a')
                             } else {
+                                // app.products = response.data.records
                                 alert(response.data.msg);
-                                window.location.href = 'index.html';
+                                // window.location.href = 'index.html';
                             }
                         })
                         .catch(function(error) {
                             console.log(error)
                         })
                 },
-                onLogout: function() {
-                    localStorage.clear()
-                    window.location.href = 'index.html'
+                deleteEvent: function(index) {
+                //   if(confirm("Are you sure you want to delete this event?")) {
+                //     // $remove is a Vue convenience method similar to splice
+                //     this.events.$remove(index);
+                //   }
+                // console.log(index)
+                alert(index)
                 }
             },
             created: function() {

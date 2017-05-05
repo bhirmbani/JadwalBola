@@ -35,15 +35,27 @@
 
                     <!-- Login Form -->
                     <div class="nb-login">
-                        <h3 class="scenter">Sign In</h3>
+                        <h3 class="scenter">Register</h3>
                         <form>
                             <div class="form-group">
+                                <label for="name">
+                                    Name
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Name" v-model="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="username">
+                                    Username
+                                </label>
                                 <input type="text" class="form-control" placeholder="Enter Username" v-model="username">
                             </div>
                             <div class="form-group">
+                                <label for="password">
+                                    Password
+                                </label>
                                 <input type="password" class="form-control" placeholder="Enter Password" v-model="password">
                             </div>
-                            <button type="button" class="btn btn-primary" v-on:click="onLogin">Sign In</button>
+                            <button type="button" class="btn btn-primary" v-on:click="onRegister">Submit</button>
                         </form>
                     </div>
 
@@ -52,10 +64,10 @@
         </div>
 
         <footer class="footer">
-               <div class="container">
-                   <h6 class="text-center pt-3">Copyright by Jadwal Bola 2017</h6>
-               </div>
-           </footer>
+           <div class="container">
+               <h6 class="text-center pt-3">Copyright by Jadwal Bola 2017</h6>
+           </div>
+       </footer>
 
     </div>
 
@@ -64,33 +76,30 @@
         var app = new Vue({
             el: '#app',
             data: {
+                name: '',
                 username: '',
-                password: ''
+                password: '',
+                role: ''
             },
             methods: {
-                onLogin() {
+                onRegister() {
                     let self = this
-                    axios.post('http://localhost:3000/signin', {
+                    axios.post('http://localhost:3000/signup', {
+                            name: self.name,
                             username: self.username,
-                            password: self.password
+                            password: self.password,
+                            role: 'User'
                         })
                         .then(response => {
                             if (response.data.success) {
-                                self.message = response.data.message
-                                localStorage.setItem('token', response.data.token)
-                                // console.log(response)
-                                window.location.href = 'front.html'
-                                // window.location.href = "http://127.0.0.1:8080/front.html"
+                                window.location.href = 'index.html'
                             } else {
-                                self.message = response.data.message
-                                alert(self.message)
-                                window.location.reload()
+                                alert('Gagal Register')
+                                window.location.href = 'register.html'
                             }
                         })
                         .catch(error => {
-                            alert('Username dan Password Tidak Sesuai')
-                            window.location.reload()
-                            // console.log(error)
+                            console.log(error)
                         })
 
                 }
