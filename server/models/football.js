@@ -78,14 +78,16 @@ methods.getTable = (req, res) => {
   })
 }
 
-// methods.getPlayers = (req, res) => {
-//   axios.get('http://api.football-data.org/v1/teams/322/players')
-//   .then((data) => {
-//     let stringFromApi = circularJSON.stringify(data.players);
-//     let objFromAPi = circularJSON.parse(stringFromApi)
-//     res.send(objFromAPi);
-//   })
-// }
+methods.getPlayers = (req, res) => {
+  let teamId = req.params.id;
+  let url = `http://api.football-data.org/v1/teams/${teamId}/players`;
+  axios.get(url, {headers: {'X-Auth-Token': 'd50e127ef1404fd9a4a51c807899d109' }})
+  .then((data) => {
+    let stringFromApi = circularJSON.stringify(data.data.players);
+    let objFromAPi = circularJSON.parse(stringFromApi)
+    res.send(objFromAPi);
+  })
+}
 
 module.exports = methods;
 

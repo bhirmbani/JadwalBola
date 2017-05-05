@@ -18,4 +18,8 @@ methods.getTable = (req, res, next) => {
   Football.getTable(req, res);
 }
 
+methods.getPlayers = (req, res, next) => {
+  Football.getPlayers(req, res);
+}
+
 module.exports = methods;
