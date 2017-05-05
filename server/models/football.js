@@ -5,10 +5,18 @@ const methods = {};
 methods.getAllTeams = (req, res) => {
   axios.get('http://api.football-data.org/v1/competitions/426/teams', {headers: {'X-Auth-Token': 'd50e127ef1404fd9a4a51c807899d109' }})
   .then((data) => {
-    let stringFromApi = circularJSON.stringify(data.data);
+    let stringFromApi = circularJSON.stringify(data.data.teams);
     let objFromAPi = circularJSON.parse(stringFromApi);
-    let container = [];
-    res.send(objFromAPi.teams);
+    let arr = [];
+
+    objFromAPi.forEach(function(val) {
+      let obj = {};
+      obj.name = val.name;
+      obj.crestURL = val.crestUrl;
+      arr.push(obj);
+    })
+    res.send(arr);
+
   });
 }
 
@@ -69,7 +77,7 @@ methods.getTable = (req, res) => {
       let obj = {};
       obj.position = val.position;
       obj.teamName = val.teamName;
-      obj.crestURL = val.crestURL;
+      obj.crestURL = val.crestUrl;
       obj.playedGames = val.playedGames;
       obj.points = val.points;
       arr.push(obj);
