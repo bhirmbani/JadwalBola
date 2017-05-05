@@ -23,3 +23,4 @@ methods.getPlayers = (req, res, next) => {
 }
 
 module.exports = methods;
+

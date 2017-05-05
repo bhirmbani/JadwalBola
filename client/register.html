@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-primary">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="index.html">
+                    Jadwal Bola
+                </a>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+
+                    <!-- Login Form -->
+                    <div class="nb-login">
+                        <h3 class="scenter">Register</h3>
+                        <form>
+                            <div class="form-group">
+                                <label for="name">
+                                    Name
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Name" v-model="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="username">
+                                    Username
+                                </label>
+                                <input type="text" class="form-control" placeholder="Enter Username" v-model="username">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">
+                                    Password
+                                </label>
+                                <input type="password" class="form-control" placeholder="Enter Password" v-model="password">
+                            </div>
+                            <button type="button" class="btn btn-primary" v-on:click="onRegister">Submit</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+           <div class="container">
+               <h6 class="text-center pt-3">Copyright by Jadwal Bola 2017</h6>
+           </div>
+       </footer>
+
+    </div>
+
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                name: '',
+                username: '',
+                password: '',
+                role: ''
+            },
+            methods: {
+                onRegister() {
+                    let self = this
+                    axios.post('http://localhost:3000/signup', {
+                            name: self.name,
+                            username: self.username,
+                            password: self.password,
+                            role: 'User'
+                        })
+                        .then(response => {
+                            if (response.data.success) {
+                                window.location.href = 'index.html'
+                            } else {
+                                alert('Gagal Register')
+                                window.location.href = 'register.html'
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error)
+                        })
+
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>
