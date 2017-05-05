@@ -55,9 +55,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6">
-                        <h3>Jadwal Pertandingan</h3>
-                        <ul class="list-group" v-for="product in products">
-                            <li class="list-group-item">{{product.name}}-{{product.role}}</li>
+                        <h3>Jadwal Pertandingan Matchday : {{pertandingans[0].matchday}}</h3>
+                        <ul class="list-group" v-for="pertandingan in pertandingans">
+                            <li class="list-group-item">{{pertandingan.date}} > {{pertandingan.homeTeamName}} : {{pertandingan.result.goalsHomeTeam}} - {{pertandingan.result.goalsAwayTeam}} : {{pertandingan.awayTeamName}} </li>
                         </ul>
                     </div>
                     <div class="col-lg-6">
@@ -66,16 +66,20 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Tim</th>
+                                        <th>Posisi</th>
+                                        <th>Team</th>
+                                        <th>Minggu</th>
                                         <th>Poin</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(product, firstIndex) in products">
-                                        <th>{{firstIndex+=1}}</th>
-                                        <td>{{product.role}}</td>
-                                        <td>{{product.username}}</td>
+                                    <tr v-for="table in tables">
+                                        <th>{{table.position}}</th>
+                                        <td>{{table.teamName}}</td>
+                                        <td>{{table.playedGames}}</td>
+                                        <td>
+                                            {{table.points}}
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -102,9 +106,6 @@
                     </div>
                 </div>
             </div>
-
-
-
         </div>
 
         <footer class="footer-front">
@@ -118,22 +119,43 @@
         var app = new Vue({
             el: '#app',
             data: {
-                products: []
+                pertandingans: [],
+                tables: []
             },
             methods: {
                 loadData: function() {
-                    axios.get('http://localhost:3000/footballs', {
+                    axios.get('http://localhost:3000/footballs/getFixtures', {
                             headers: {
                                 token: localStorage.getItem('token')
                             }
                         })
                         .then(function(response) {
+                            // console.log(response)
                             if (response.data.success) {
-                                app.products = response.data.records
-                                app.success = response.data.success
+                                app.pertandingans = response.data.records
                             } else {
+                                // app.products = response.data.records
                                 alert(response.data.msg);
                                 window.location.href = 'index.html';
+                                // app.pertandingan = response.data.records
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error)
+                        })
+                },
+                loadTable: function() {
+                    axios.get('http://localhost:3000/footballs/getTables', {
+                            headers: {
+                                token: localStorage.getItem('token')
+                            }
+                        })
+                        .then(function(response) {
+                            // console.log(response)
+                            if (response.data.success) {
+                                app.tables = response.data.records
+                            } else {
+                                app.tables = response.data.records
                             }
                         })
                         .catch(function(error) {
@@ -147,6 +169,7 @@
             },
             created: function() {
                 this.loadData()
+                this.loadTable()
             }
         })
     </script>
