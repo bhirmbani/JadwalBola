@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-primary">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="#">
+                    <img src="img/icon1.png" width="32" height="32" class="d-inline-block mb-2" alt="logo"> Jadwal Bola
+                </a>
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <i class="fa fa-sign-in logo-in" aria-hidden="true"></i>
+                        <!-- <button type="button" class="btn btn-warning" v-on:click="onLogout">Log Out</button> -->
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" class="btn btn-warning" href="signin.html">Log In</a>
+                        <!-- <button type="button" class="btn btn-warning" v-on:click="onLogout">Log Out</button> -->
+                    </li>
+                    <li class="nav-item">
+                        <i class="fa fa-user logo-in" aria-hidden="true"></i>
+                        <!-- <button type="button" class="btn btn-warning" v-on:click="onLogout">Log Out</button> -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" class="btn btn-success" href="register.html">Register</a>
+                        <!-- <button type="button" class="btn btn-warning" v-on:click="onLogout">Log Out</button> -->
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="logo">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img src="img/logo.png" width="1000" height="200" class="mx-auto d-block" alt="logo">
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h3>Jadwal Pertandingan Matchday : {{pertandingans[0].matchday}}</h3>
+                        <ul class="list-group" v-for="pertandingan in pertandingans">
+                            <li class="list-group-item">{{pertandingan.date}} > {{pertandingan.homeTeamName}} : {{pertandingan.result.goalsHomeTeam}} - {{pertandingan.result.goalsAwayTeam}} : {{pertandingan.awayTeamName}} </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3>Klasemen</h3>
+                        <table>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Posisi</th>
+                                        <th>Team</th>
+                                        <th>Minggu</th>
+                                        <th>Poin</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="table in tables">
+                                        <th>{{table.position}}</th>
+                                        <td>{{table.teamName}}</td>
+                                        <td>{{table.playedGames}}</td>
+                                        <td>
+                                            {{table.points}}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <footer class="footer-front">
+        <div class="container">
+            <h6 class="text-center pt-3">Copyright by Jadwal Bola 2017</h6>
+        </div>
+    </footer>
+    </div>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable();
+        });
+    </script>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                pertandingans: [],
+                tables: [],
+                counter: -199
+            },
+            methods: {
+                loadData: function() {
+                    axios.get('http://localhost:3000/footballs/timed-fixtures', {})
+                        .then(function(response) {
+                            // console.log(response)
+                            if (response.data.success) {
+                                app.pertandingans = response.data.records
+                            } else {
+                                // app.products = response.data.records
+                                // alert(response.data.msg);
+                                // window.location.href = 'index.html';
+                                app.pertandingan = response.data.records
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error)
+                        })
+                },
+                loadTable: function(){
+                    axios.get('http://localhost:3000/footballs/tables', {})
+                        .then(function(response) {
+                            // console.log(response.data)
+                            if (response.data.success) {
+                                app.tables = response.data.records
+                            } else {
+                                app.tables = response.data.records
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error)
+                        })
+                }
+
+            },
+            created: function() {
+                this.loadData()
+                this.loadTable()
+            }
+        })
+    </script>
+</body>
+
+</html>

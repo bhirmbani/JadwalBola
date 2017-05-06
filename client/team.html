@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.1/axios.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <nav class="navbar fixed-top navbar-toggleable-md navbar-inverse bg-primary">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <a class="navbar-brand" href="#">
+                    <img src="img/icon1.png" width="32" height="32" class="d-inline-block mb-2" alt="logo"> Jadwal Bola
+                </a>
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <i class="fa fa-sign-out logo-out" aria-hidden="true"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" v-on:click="onLogout">Log Out</a>
+                        <!-- <button type="button" class="btn btn-danger mt-1" v-on:click="onLogout"><i class="fa fa-sign-out" aria-hidden="true"></i> Log Out</button> -->
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="logo">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <img src="img/team.png" width="128" height="128" class="mx-auto d-block" alt="logo">
+                    </div>
+                    <div class="col-lg-6">
+                        <h2>Team 1</h2>
+                        <p>T1</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div id="jadwal">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Jadwal & Hasil Pertandingan</h2>
+                            <table id="example1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Pertandingan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td>System Architect</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="pemain">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Daftar Pemain</h2>
+                            <table id="example2" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>No Pemain</th>
+                                        <th>Nama Pemain</th>
+                                        <th>Posisi</th>
+                                        <th>Negara</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td>System Architect</td>
+                                        <td>Edinburgh</td>
+                                        <td>f</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <footer class="footer">
+            <div class="container">
+                <h6 class="text-center pt-3">Copyright by Awesome Key 2017</h6>
+            </div>
+        </footer> -->
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#example1').DataTable();
+        });
+
+        $(document).ready(function() {
+            $('#example2').DataTable();
+        });
+    </script>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                products: []
+            },
+            methods: {
+                loadData: function() {
+                    axios.get('http://localhost:3000/footballs', {
+                            headers: {
+                                token: localStorage.getItem('token')
+                            }
+                        })
+                        .then(function(response) {
+                            if (response.data.success) {
+                                app.products = response.data.records
+                                app.success = response.data.success
+                            } else {
+                                alert(response.data.msg);
+                                window.location.href = 'index.html';
+                            }
+                        })
+                        .catch(function(error) {
+                            console.log(error)
+                        })
+                },
+                onLogout: function() {
+                    localStorage.clear()
+                    window.location.href = 'index.html'
+                }
+            },
+            created: function() {
+                this.loadData()
+            }
+        })
+    </script>
+</body>
+
+</html>
